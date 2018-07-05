@@ -1,0 +1,22 @@
+to add changes :
+----------------
+    git add --all
+    
+add global user name and email (for one time)
+---------------------------------------------
+    git config --global user.name "<your_name>"
+    git config --global user.email "<your_email>"
+    
+to commit the code
+------------------
+    git commit -m "<your message>"
+    
+to push the code
+----------------
+    git push
+    
+to pull the code
+----------------
+    git pull
+    
+Note: Before pulling or pushing the code always add and commit the code...
