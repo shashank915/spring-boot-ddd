@@ -1,6 +1,6 @@
 package com.ace.registration.service;
 
-import com.ace.payment.usecase.StudentRegistrationUseCase;
+
 import com.ace.registration.infrastructure.StudentRegistrationRepo;
 import com.ace.registration.model.Course;
 import com.ace.registration.model.Student;
@@ -9,7 +9,7 @@ import com.ace.registration.model.StudentRegistration;
 import com.ace.registration.usecase.RegistrationUseCase;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class StudentRegistrationService {
+
     @Autowired
     StudentRegistrationRepo repository;
     @Autowired
@@ -27,7 +28,7 @@ public class StudentRegistrationService {
         return repository.findById(studentId);
     }
 
-    public void stdentReistration(Course course, Student student){
+    public void addStudentRegistration(Course course, Student student){
         List<StudentRegistration> registrations=new ArrayList<>();
         repository.findAll().forEach(x->registrations.add(x));
 

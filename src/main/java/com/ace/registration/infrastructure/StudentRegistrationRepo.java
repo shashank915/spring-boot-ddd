@@ -10,6 +10,4 @@ import java.util.Optional;
 
 
 public interface StudentRegistrationRepo extends CrudRepository<StudentRegistration,StudentId> {
-
-
 }

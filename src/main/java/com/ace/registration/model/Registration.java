@@ -4,15 +4,28 @@ import lombok.Data;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Component
 @Data
+@Entity
 public class Registration {
+
+    @EmbeddedId
     private RegistrationId registrationId;
+
+//    @Embedded
+    @Transient
     private StudentId studentId;
+
+    @Embedded
     private CourseId courseId;
+
+    @Enumerated(EnumType.STRING)
     private RegistrationState registrationState;
+
+    //todo add converters for localDate
     private LocalDate registrationDate;
 //    String status=null;
 //    public Register(StudentId sid,CourseId cid)

@@ -8,14 +8,25 @@ import lombok.Data;
 import lombok.Setter;
 import lombok.val;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Data
+@Entity
 public class StudentRegistration {
+
+    @EmbeddedId
     private StudentId studentId;
+
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "registrations", joinColumns = @JoinColumn(name = "student_id"))
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "student_id")
     private List<Registration> registrations = new ArrayList<>();
+
+    @Transient
     @Setter(AccessLevel.PRIVATE)
     private List<Payment> payments = new ArrayList<>();
 
