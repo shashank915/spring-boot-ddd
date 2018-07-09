@@ -1,14 +1,23 @@
 package com.ace.payment.model;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 
 @Data
 @Component
+@Entity
+@Table(name = "payments")
 public class Payment {
 
+    @Column(name = "payment_state", columnDefinition = "VARCHAR")
     private PaymentState paymentState;
-    private PaymentId paymentId;
-    private double amount;
 
+    @EmbeddedId
+    private PaymentId paymentId;
+
+    @Column(name = "amount")
+    private double amount;
 }

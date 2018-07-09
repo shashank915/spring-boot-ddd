@@ -8,17 +8,25 @@ import lombok.Data;
 import lombok.Setter;
 import lombok.val;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Data
+@Entity
+@Access(AccessType.FIELD)
 public class StudentRegistration {
-    private StudentId studentId;
-    private List<Registration> registrations = new ArrayList<>();
-    @Setter(AccessLevel.PRIVATE)
-    private List<Payment> payments = new ArrayList<>();
 
+    @EmbeddedId
+    private StudentId studentId;
+
+    @OneToMany
+    private List<Registration> registrations = new ArrayList<>();
+
+    @Setter(AccessLevel.PRIVATE)
+    @Transient
+    private List<Payment> payments = new ArrayList<>();
 
     public Optional<Payment> findById(PaymentId paymentId) {
         return this.payments.stream().filter(x -> x.getPaymentId().equals(paymentId)).findAny();
@@ -55,7 +63,7 @@ public class StudentRegistration {
         return this.registrations.stream().filter(x->x.getCourseId().equals(courseId)).count()==1;
     }
 
-    public  void createRegistration(Registration registration){
+    public void createRegistration(Registration registration){
 
         this.registrations.add(registration);
 

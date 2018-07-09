@@ -20,6 +20,7 @@ import java.util.Optional;
 public class StudentRegistrationService {
     @Autowired
     StudentRegistrationRepo repository;
+
     @Autowired
     RegistrationUseCase registrationUseCase;
 
