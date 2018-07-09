@@ -15,13 +15,15 @@ import java.util.Optional;
 
 @Data
 @Entity
-@Access(AccessType.FIELD)
 public class StudentRegistration {
 
     @EmbeddedId
     private StudentId studentId;
 
-    @OneToMany
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "registrations", joinColumns = @JoinColumn(name = "student_id"))
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "student_id")
     private List<Registration> registrations = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)

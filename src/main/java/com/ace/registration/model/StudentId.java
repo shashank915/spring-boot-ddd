@@ -2,13 +2,18 @@ package com.ace.registration.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Data
-@Embeddable
+@NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class StudentId implements Serializable {
     private Long studentId;
 }
