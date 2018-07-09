@@ -63,6 +63,4 @@ public class StudentRegistrationServiceIT {
 
         registrationRepo.save(studentRegistration);
     }
-
-
 }
