@@ -16,5 +16,4 @@ import java.io.Serializable;
 @Embeddable
 public class CourseId implements Serializable {
     private Long courseId;
-
 }

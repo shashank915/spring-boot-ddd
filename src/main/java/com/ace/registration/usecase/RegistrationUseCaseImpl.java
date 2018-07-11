@@ -2,14 +2,20 @@ package com.ace.registration.usecase;
 
 import com.ace.registration.model.*;
 
+import com.ace.registration.model.idgenerators.RegistrationIdGenerator;
 import io.vavr.control.Either;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RegistrationUseCaseImpl implements RegistrationUseCase {
+
+    @Autowired
+    RegistrationIdGenerator registrationIdGenerator;
 
     private boolean checkCourseRegistrationsLessThan10(Course course,
                                                        List<StudentRegistration> studentRegistrations){
@@ -19,6 +25,7 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
 
     private Registration createRegistration(Course course,Student student,RegistrationState registrationState){
         val registration=new Registration();
+        registration.setRegistrationId(registrationIdGenerator.nextRegistrationId());
         registration.setCourseId(course.getCourseId());
         registration.setStudentId(student.getStudentId());
         registration.setRegistrationState(registrationState);
@@ -49,9 +56,11 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
 
     @Override
     public Either<Exception, StudentRegistration> registerStudent(Course course, Student student,
-                                                           List<StudentRegistration> studentRegistrations) {
+                                                                  List<StudentRegistration> studentRegistrations) {
 
-        val studentRegistration=this.findStudentRegistration(student,studentRegistrations);
+        //val studentRegistration=this.findStudentRegistration(student,studentRegistrations);
+        //find StudentRegistration for student
+        StudentRegistration studentRegistration = getStudentRegistration(studentRegistrations,student.getStudentId());
 
         if (studentRegistration.canYouRegisterForOneMoreCourse()){
 
@@ -70,5 +79,16 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
             return Either.left(new Exception("Student can not register for more than 5 courses"));
         }
 
+    }
+
+    private StudentRegistration getStudentRegistration(List<StudentRegistration> studentRegistrationList,StudentId studentId) {
+        Optional<StudentRegistration> optional = studentRegistrationList.stream()
+                .filter(x -> x.getStudentId().equals(studentId)).findAny();
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        StudentRegistration studentRegistration =  new StudentRegistration();
+        studentRegistration.setStudentId(studentId);
+        return studentRegistration;
     }
 }

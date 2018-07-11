@@ -5,9 +5,10 @@ import io.vavr.control.Either;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface RegistrationUseCase {
 
-    public Either<Exception,StudentRegistration> registerStudent(Course course, Student student, List<StudentRegistration> studentRegistrations);
+    public Either<Exception,StudentRegistration> registerStudent(Course course, Student student, List<StudentRegistration> studentRegistrationList);
 }

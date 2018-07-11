@@ -30,11 +30,11 @@ public class StudentRegistrationService {
     }
 
     public void addStudentRegistration(Course course, Student student){
-        List<StudentRegistration> registrations=new ArrayList<>();
-        repository.findAll().forEach(x->registrations.add(x));
+        List<StudentRegistration> studentRegistrationList=new ArrayList<>();
+        repository.findAll().forEach(x->studentRegistrationList.add(x));
 
         val registrationEither=registrationUseCase.
-                registerStudent(course,student,registrations);
+                registerStudent(course,student,studentRegistrationList);
         if (registrationEither.isRight()){
             repository.save(registrationEither.get());
         }

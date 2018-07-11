@@ -3,14 +3,22 @@ package com.ace.registration.service;
 import com.ace.registration.infrastructure.StudentRegistrationRepo;
 import com.ace.registration.model.*;
 import com.example.demo.AppConfig;
+import lombok.val;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -35,32 +43,87 @@ public class StudentRegistrationServiceIT {
         studentRegistrationService.addStudentRegistration(course,student);
     }
 
-    @Test
-    public void saveStudentRegTest(){
-        StudentId studentId = new StudentId(1l);
+    StudentRegistration studentRegistration;
+    Registration registration1,registration2,registration3;
+    StudentId studentId;
 
-        Registration registration1 = new Registration();
+    @BeforeEach
+    public void init(){
+        studentId = new StudentId(1l);
+
+        registration1 = new Registration();
         registration1.setRegistrationId(new RegistrationId(1l));
         registration1.setStudentId(studentId);
         registration1.setCourseId(new CourseId(1l));
         registration1.setRegistrationState(RegistrationState.WAITING);
 
-        Registration registration2 = new Registration();
+        registration2 = new Registration();
         registration2.setRegistrationId(new RegistrationId(2l));
         registration2.setStudentId(studentId);
         registration2.setCourseId(new CourseId(2l));
         registration2.setRegistrationState(RegistrationState.WAITING);
 
-        Registration registration3 = new Registration();
+        registration3 = new Registration();
         registration3.setRegistrationId(new RegistrationId(3l));
         registration3.setStudentId(studentId);
         registration3.setCourseId(new CourseId(3l));
         registration3.setRegistrationState(RegistrationState.WAITING);
 
-        StudentRegistration studentRegistration = new StudentRegistration();
+        studentRegistration = new StudentRegistration();
+
         studentRegistration.setStudentId(studentId);
-        studentRegistration.setRegistrations(Arrays.asList(registration1,registration2,registration3));
+        studentRegistration.getRegistrations().add(registration1);
+        studentRegistration.getRegistrations().add(registration2);
+        studentRegistration.getRegistrations().add(registration3);
+    }
+    @Test
+    @Transactional
+    public void saveStudentRegTest() {
+        registrationRepo.save(studentRegistration);
+
+        val optional = registrationRepo.findById(studentId);
+        Assumptions.assumeTrue(optional.isPresent());
+        assertThat(optional.isPresent()).isTrue();
+
+        StudentRegistration studentRegistration1 = optional.get();
+        assertThat(studentRegistration1.getStudentId().getStudentId()).isEqualTo(studentRegistration.getStudentId().getStudentId());
+
+        assertThat(studentRegistration1.getRegistrations().size()).isEqualTo(studentRegistration.getRegistrations().size());
+    }
+
+    @Test
+    public void childEntityupdateTest(){
+        registration1.setRegistrationState(RegistrationState.APPROVED);
+        registration2.setRegistrationState(RegistrationState.CONFIRMED);
+        registration3.setRegistrationState(RegistrationState.CANCELED);
+
+        Registration registration4 = new Registration();
+        registration4.setRegistrationId(new RegistrationId(4l));
+        registration4.setStudentId(studentId);
+        registration4.setCourseId(new CourseId(4l));
+        registration4.setRegistrationState(RegistrationState.APPROVED);
+
+        studentRegistration.getRegistrations().add(registration4);
 
         registrationRepo.save(studentRegistration);
+
+        val optional = registrationRepo.findById(studentId);
+        assertThat(optional.isPresent()).isTrue();
+        StudentRegistration studentRegistration1 = optional.get();
+
+//        assertThat(studentRegistration1.getRegistrations().size()).isEqualTo(studentRegistration.getRegistrations().size());
+//        assertThat(studentRegistration1.getRegistrations().stream().filter(x->x.getRegistrationId())findAny())
+    }
+//
+    @Test
+    public void parentEntityDeleteTest(){
+        registrationRepo.delete(studentRegistration);
+    }
+
+    @Test
+    public void getMaxRegistrationIdTest(){
+        RegistrationId registrationId = registrationRepo.getMaxRegistrationId();
+        assertThat(registrationId).isNotNull();
+        assertThat(registrationId).isEqualTo(new RegistrationId(4l));
     }
 }

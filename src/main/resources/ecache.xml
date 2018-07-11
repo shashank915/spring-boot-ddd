@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <diskStore path="java.io.tmpdir" />
+
+    <defaultCache maxElementsInMemory="10"
+                  eternal="false"
+                  timeToIdleSeconds="120"
+                  timeToLiveSeconds="3600"
+                  overflowToDisk="true" />
+
+    <cache name="courses"
+           maxElementsInMemory="50"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="120"
+           copyOnRead="true"
+           copyOnWrite=""
+    />
+    <!--specifies max no of elements in heap-->
+    <!--specifies whether the data is not evictable or not-->
+    <!--specifies whether if data overflow happen it goes to external file or not-->
+    <!--specicifies the idle time for a cacheable data(if it is not being accessed)-->
+    <!--specifies for how much time data will remain in the heap irrespective of its access -->
+
+</ehcache>

@@ -27,7 +27,7 @@ public class Registration {
     private RegistrationState registrationState;
 
     //todo add converters for localDate
-    private LocalDate registrationDate;
+    private LocalDate registrationDate = LocalDate.now();
 //    String status=null;
 //    public Register(StudentId sid,CourseId cid)
 //    {
