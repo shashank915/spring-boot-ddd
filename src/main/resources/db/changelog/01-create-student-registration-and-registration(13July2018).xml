@@ -1,25 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
 <changeSet id="01" author="shashank">
-    <createTable tableName="student_registrations"
-                 remarks="A table to contain student registrations">
+    <!--<createTable tableName="student_registrations"-->
+                 <!--remarks="A table to contain student registrations">-->
+        <!--<column name="student_id" type="int">-->
+            <!--<constraints nullable="false" unique="true" primaryKey="true"/>-->
+        <!--</column>-->
+    <!--</createTable>-->
+
+    <!--<createTable tableName="registrations"-->
+                 <!--remarks="A table to contain all the registration grouped by courses">-->
+        <!--<column name="id" type="int">-->
+            <!--<constraints unique="true" nullable="false" primaryKey="true"/>-->
+        <!--</column>-->
+        <!--<column name="course_id" type="int"/>-->
+        <!--<column name="registration_date" type="varchar(20)"/>-->
+        <!--<column name="registration_state" type="varchar(20)"/>-->
+        <!--<column name="student_id" type="int">-->
+            <!--<constraints nullable="false"/>-->
+        <!--</column>-->
+    <!--</createTable>-->
+
+    <!--<addForeignKeyConstraint baseTableName="registrations" baseColumnNames="student_id"-->
+                             <!--constraintName="registration_fk"-->
+                             <!--referencedTableName="student_registrations" referencedColumnNames="student_id"/>-->
+    <!---->
+    <createTable tableName="student_registrations">
         <column name="student_id" type="int">
-            <constraints nullable="false" unique="true" primaryKey="true"/>
+            <constraints unique="true" primaryKey="true" nullable="false"/>
         </column>
     </createTable>
 
-    <createTable tableName="registrations"
-                 remarks="A table to contain all the registration grouped by courses">
+    <createTable tableName="registrations">
         <column name="id" type="int">
-            <constraints unique="true" nullable="false" primaryKey="true"/>
+            <constraints unique="true" primaryKey="true" nullable="false"/>
         </column>
         <column name="course_id" type="int"/>
-        <column name="registration_date" type="varchar(20)"/>
         <column name="registration_state" type="varchar(20)"/>
-        <column name="student_id" type="int">
-            <constraints nullable="false"/>
-        </column>
+        <column name="registration_date" type="varchar(50)"/>
+        <column name="student_id" type="int"/>
     </createTable>
-
     <addForeignKeyConstraint baseTableName="registrations" baseColumnNames="student_id"
-                             constraintName="registration_fk"
-                             referencedTableName="student_registrations" referencedColumnNames="student_id"/>
+                             constraintName="F_KEY_STUDENT_ID" referencedTableName="student_registrations"
+                             referencedColumnNames="student_id"/>
 </changeSet>
+
+</databaseChangeLog>
