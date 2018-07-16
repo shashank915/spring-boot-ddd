@@ -1,0 +1,46 @@
+spring:
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ace_test
+      username: root
+      password: 7777
+
+  data:
+    jpa:
+      repositories:
+        enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+#should not be included at production level
+#in order to work with liquibase it should be "none"
+    hibernate:
+      ddl-auto: none
+
+    show-sql: true
+
+#enabling caching(optional)
+  cache:
+    ehcache:
+      config: ecache.xml
+
+#enabling liquibase
+  liquibase:
+    change-log: classpath:/db/liquibase-changelog.xml
+
+#enabling spring-cloud-stream
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        greetings-in:
+          destination: greetings
+          contentType: application/json
+        greetings-out:
+          destination: greetings
+          contentType: application/json
