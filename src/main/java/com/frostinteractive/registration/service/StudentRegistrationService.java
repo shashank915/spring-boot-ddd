@@ -32,4 +32,8 @@ public class StudentRegistrationService {
             repository.save(registrationEither.get());
         }
     }
+
+    public Optional<StudentRegistration> getStudentRegistrationByStudentId(StudentId studentId){
+        return repository.findById(studentId);
+    }
 }

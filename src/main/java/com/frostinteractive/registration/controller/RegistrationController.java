@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class RegistrationController {
 
@@ -16,7 +18,7 @@ public class RegistrationController {
     StudentRegistrationService service;
 
 
-    @PostMapping("/registration/register/{courseId}")
+    @PostMapping("/registration/{courseId}")
     public ResponseEntity<String> registerStudentToCourse(@DTO(StudentDTO.class) Student student,
                                                         @PathVariable("courseId")Long courseId){
         Course course = new Course();
@@ -26,10 +28,14 @@ public class RegistrationController {
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/registration/getStudentCourse/{studentId}")
-    public ResponseEntity<Registration> getCoursesAccStudent(@PathVariable("studentId") Long studentId){
-        System.out.println("Hello");
-        return ResponseEntity.ok(new Registration());
+    @GetMapping("/registration/{studentId}")
+    public ResponseEntity<StudentRegistration> getCoursesAccStudent(@PathVariable("studentId") Long studentId){
+        Optional<StudentRegistration> studentRegistrationByStudentId = service
+                .getStudentRegistrationByStudentId(new StudentId(studentId));
+        if(studentRegistrationByStudentId.isPresent()){
+            return ResponseEntity.ok(studentRegistrationByStudentId.get());
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }

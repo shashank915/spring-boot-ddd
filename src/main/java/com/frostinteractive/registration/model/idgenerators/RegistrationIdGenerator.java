@@ -13,6 +13,6 @@ public class RegistrationIdGenerator {
 
     public RegistrationId nextRegistrationId(){
         RegistrationId registrationId = studentRegistrationRepo.getMaxRegistrationId();
-        return (registrationId != null) ? registrationId : new RegistrationId(1l);
+        return (registrationId != null) ? new RegistrationId(registrationId.getId()+1) : new RegistrationId(1l);
     }
 }

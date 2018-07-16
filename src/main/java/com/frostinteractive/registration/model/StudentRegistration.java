@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Data
 @Entity
+@Table(name = "student_registrations")
 public class StudentRegistration {
 
     @EmbeddedId

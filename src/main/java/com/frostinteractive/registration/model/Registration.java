@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Component
 @Data
 @Entity
+@Table(name = "registrations")
 public class Registration {
 
     @EmbeddedId
@@ -25,7 +26,6 @@ public class Registration {
     @Column(name = "registration_state")
     private RegistrationState registrationState;
 
-    //todo add converters for localDate
     private LocalDate registrationDate = LocalDate.now();
 //    String status=null;
 //    public Register(StudentId sid,CourseId cid)
