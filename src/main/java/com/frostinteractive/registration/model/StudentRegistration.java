@@ -3,6 +3,8 @@ package com.frostinteractive.registration.model;
 import com.frostinteractive.payment.model.Payment;
 import com.frostinteractive.payment.model.PaymentId;
 import com.frostinteractive.payment.model.PaymentState;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -16,18 +18,22 @@ import java.util.Optional;
 @Data
 @Entity
 @Table(name = "student_registrations")
+@ApiModel(description = "Student Registration class contains list of registration ans payments")
 public class StudentRegistration {
 
     @EmbeddedId
 //    @Embedded
+    @ApiModelProperty(notes = "Student Id")
     private StudentId studentId;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "student_id")
+    @ApiModelProperty(notes = "List of the student enrolled to courses")
     private List<Registration> registrations = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
     @Transient
+    @ApiModelProperty(notes = "List of the student paid for courses")
     private List<Payment> payments = new ArrayList<>();
 
     public Optional<Payment> findById(PaymentId paymentId) {
