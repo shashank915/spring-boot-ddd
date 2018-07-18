@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public interface StudentRegistrationUseCase {
 
-    public StudentRegistration payForStudentCourses(Payment payment,
+    public StudentRegistration payForStudentCourses(PaymentVO paymentVO,
                                                                    StudentRegistration studentRegistration,
                                                                    List<RegistrationId> registrationIds,
                                                                    List<Course> courseList);

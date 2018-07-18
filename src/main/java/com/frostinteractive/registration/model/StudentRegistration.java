@@ -31,33 +31,44 @@ public class StudentRegistration {
     @ApiModelProperty(notes = "List of the student enrolled to courses")
     private List<Registration> registrations = new ArrayList<>();
 
-    @Setter(AccessLevel.PRIVATE)
+//    @Setter(AccessLevel.PRIVATE)
+//    @Transient
+//    @ApiModelProperty(notes = "List of the student paid for courses")
+//    private List<Payment> payments = new ArrayList<>();
     @Transient
-    @ApiModelProperty(notes = "List of the student paid for courses")
-    private List<Payment> payments = new ArrayList<>();
+    private List<PaymentId> paymentIdList = new ArrayList<>();
 
-    public Optional<Payment> findById(PaymentId paymentId) {
-        return this.payments.stream().filter(x -> x.getPaymentId().equals(paymentId)).findAny();
+
+    public Optional<PaymentId> findById(PaymentId paymentId) {
+        return this.paymentIdList.stream().filter(x -> x.getPaymentId().equals(paymentId)).findAny();
     }
 
     private Optional<Registration> findRegistrationById(RegistrationId registrationId){
         return this.registrations.stream().filter(x->x.getRegistrationId().equals(registrationId)).findAny();
     }
 
-    public StudentRegistration payForRegistration(Payment payment, List<RegistrationId> registrationIds) {
+    private List<Registration> findRegistrationByCourseIds(List<CourseId> courseIdList){
+        List<Registration> registrationsToBeModified = new ArrayList<>();
+        courseIdList.stream().forEach(x->{
+            val registration = this.registrations.stream().filter(y->y.getCourseId().equals(x)).findAny();
+            if(registration.isPresent())
+                registrationsToBeModified.add(registration.get());
+        });
+        return registrationsToBeModified;
+    }
+
+    public StudentRegistration payForRegistration(PaymentVO payment) {
         if (payment.getPaymentState().equals(PaymentState.SUCCESS)) {
-            this.payments.add(payment);
+            this.paymentIdList.add(payment.getPaymentId());
 
-            val registrationStream=registrationIds.stream().
-                    map(x->this.findRegistrationById(x)).filter(x->x.isPresent()).
-                    map(x->x.get());
+            val registrationsTobeModified = this.findRegistrationByCourseIds(payment.getCourseIdList());
 
-            registrationStream.filter(x->x.getRegistrationState().equals(RegistrationState.APPROVED)).
+            registrationsTobeModified.stream().filter(x->x.getRegistrationState().equals(RegistrationState.APPROVED)).
                     forEach(x->x.setRegistrationState(RegistrationState.CONFIRMED));
 
             return this;
         } else {
-            this.payments.add(payment);
+            this.paymentIdList.add(payment.getPaymentId());
             return this;
         }
 

@@ -11,11 +11,13 @@ public class StudentRegistrationUseCaseImpl implements StudentRegistrationUseCas
 
 
     @Override
-    public StudentRegistration payForStudentCourses(Payment payment,
+    public StudentRegistration payForStudentCourses(PaymentVO paymentVO,
                                                     StudentRegistration studentRegistration,
                                                     List<RegistrationId> registrationIds,
                                                     List<Course> courseList) {
 
-        return studentRegistration.payForRegistration(payment,registrationIds);
+        //return studentRegistration.payForRegistration(paymentVO,registrationIds);
+        return null;
     }
+
 }

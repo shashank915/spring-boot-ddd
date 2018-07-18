@@ -21,6 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -62,7 +63,7 @@
 			<artifactId>ehcache</artifactId>
 		</dependency>
 
-		<!--for cloud stream-->
+        <!--for cloud stream-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream</artifactId>
@@ -75,6 +76,11 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-test-support</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 		<!--for spring boot test-->
 		<dependency>
@@ -132,14 +138,6 @@
 			<version>8.0.11</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.2.0</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!--uuid generator-->
 		<dependency>
 			<groupId>com.fasterxml.uuid</groupId>
@@ -174,12 +172,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--for spring cloud stream testing-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-test-support</artifactId>
-            <scope>test</scope>
-        </dependency>
+
 	</dependencies>
 
     <dependencyManagement>

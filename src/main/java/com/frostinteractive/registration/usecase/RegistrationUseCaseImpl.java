@@ -91,4 +91,10 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
         studentRegistration.setStudentId(studentId);
         return studentRegistration;
     }
+
+    @Override
+    public StudentRegistration payForStudentCourses(PaymentVO paymentVO,
+                                                    StudentRegistration studentRegistration) {
+        return studentRegistration.payForRegistration(paymentVO);
+    }
 }

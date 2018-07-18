@@ -10,4 +10,7 @@ import java.util.List;
 public interface RegistrationUseCase {
 
     public Either<Exception,StudentRegistration> registerStudent(Course course, Student student, List<StudentRegistration> studentRegistrationList);
+
+    StudentRegistration payForStudentCourses(PaymentVO paymentVO,
+                                             StudentRegistration studentRegistration);
 }

@@ -11,10 +11,10 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.frostinteractive.registration.infrastructure", basePackageClasses = {Jsr310JpaConverters.class})
-@EntityScan(basePackages = "com.frostinteractive.registration",basePackageClasses = Jsr310JpaConverters.class)
-@ComponentScan(basePackages = {"com.frostinteractive.registration", "com.frostinteractive.payment"})
-@Import({SwaggerConfig.class,WebMvcConfig.class})
+@EnableJpaRepositories(basePackages = "com.frostinteractive", basePackageClasses = {Jsr310JpaConverters.class})
+@EntityScan(basePackages = "com.frostinteractive",basePackageClasses = Jsr310JpaConverters.class)
+@ComponentScan(basePackages = {"com.frostinteractive"})
+@Import({SwaggerConfig.class,WebMvcConfig.class,StreamConfig.class})
 public class AppConfig {
 
     public static void main(String[] args) {

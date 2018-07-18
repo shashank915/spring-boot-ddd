@@ -11,10 +11,12 @@ import javax.persistence.*;
 @Table(name = "payments")
 public class Payment {
 
-    @Column(name = "payment_state", columnDefinition = "VARCHAR")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_state")
     private PaymentState paymentState;
 
     @EmbeddedId
+//    @GeneratedValue()
     private PaymentId paymentId;
 
     @Column(name = "amount")

@@ -38,9 +38,9 @@ spring:
         binder:
           brokers: localhost:9092
       bindings:
-        greetings-in:
-          destination: greetings
+        payments-in:
+          destination: payments
           contentType: application/json
-        greetings-out:
-          destination: greetings
+        payments-out:
+          destination: payments
           contentType: application/json
