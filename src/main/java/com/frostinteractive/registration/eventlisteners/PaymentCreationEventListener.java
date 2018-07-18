@@ -1,4 +1,4 @@
-package com.frostinteractive.events.eventlisteners;
+package com.frostinteractive.registration.eventlisteners;
 
 import com.frostinteractive.events.PaymentCreationEvent;
 import com.frostinteractive.registration.model.PaymentVO;
